@@ -1,0 +1,10 @@
+.ui-button {
+    background-color: purple;
+    color: yellow;
+}
+
+.ui-button:enabled:hover {
+    background-color: yellow;
+    color: purple;
+    border-color: purple;
+}

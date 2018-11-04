@@ -1,0 +1,75 @@
+<p-growl [(value)]="msgs"></p-growl>
+<div style="text-align:center">
+  <h2 style="color:purple">
+   {{ title }}!
+    <img width="150" height="50" alt="Fasoos Logo" src="../assets/logos/faasos.jpg">
+  </h2>
+  <hr color="red"/>
+  </div>
+
+<div style="text-align:center" *ngIf=!isTableVisible>
+  <label>Select Product:</label><br>
+  <p-dropdown [options]="products" placeholder="Select a Product" optionLabel="name" (onChange)="selectedItem($event)"></p-dropdown><br><br>
+  <label>Select Quantity:</label><br>
+  <p-dropdown [options]="quantity" placeholder="Select Quantity" optionLabel="count" (onChange)="selectedQuantity($event)"></p-dropdown><br><br>
+  <button pButton (click)="insertItems()" label="Submit Order" ></button>
+</div>
+
+<div style="text-align:center" *ngIf=isTableVisible>
+  <h3>Order Summary</h3>
+<p-table [value]="itemList" [responsive]=true>
+    <ng-template pTemplate="caption">
+        List of Items
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Created-till-now</th>
+            <th>Predicted</th>
+            <th>Status</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item>
+      <tr>
+          <td>{{item.name}}</td>
+          <td>{{item.quantity}}</td>
+          <td>{{item.createdTillNow}}</td>
+          <td>{{item.predicted}}</td>
+          <td><button pButton (click)="updateItems(item)" label="Done" [disabled]=isButtonDisabled></button></td>
+      </tr>
+  </ng-template>
+</p-table>
+</div>
+
+<div style="text-align:center" *ngIf=isTableVisible>
+    <button pButton (click)="reset()" label="Back"></button><br><br>
+    <button pButton (click)="viewReport()" label="Download Report"></button>
+</div>
+
+<p-dialog header="Today's Report" [(visible)]="isReportVisible" [draggable]="false" [modal]="true" [responsive]="true" [width]="800" [minWidth]="200" [minY]="70" 
+        [maximizable]="true" [baseZIndex]="10000">
+    <span>
+        <p-table [value]="itemList" [responsive]=true styleClass="border:none">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Name</th>
+                    <th>Produced</th>
+                    <th>Predicted</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+              <tr>
+                  <td>{{item.name}}</td>
+                  <td>{{item.createdTillNow}}</td>
+                  <td>{{item.predicted}}</td>
+              </tr>
+          </ng-template>
+        </p-table>
+    </span>
+        <p-footer>
+            <button type="button" pButton (click)="hide()" label="Ok"></button>
+        </p-footer>
+</p-dialog>
+
+<router-outlet></router-outlet>
