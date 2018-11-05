@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ItemSchema = new Schema({
+    _id:{
+        type:Number
+    },
     name:{
         type: String,
         required: [true,'name is required']
@@ -13,8 +16,7 @@ const ItemSchema = new Schema({
         type: Number
     },
     predicted:{
-        type: Number,
-        default: 123
+        type: Number
     }
 });
 
